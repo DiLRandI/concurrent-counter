@@ -29,3 +29,15 @@ Scenario
 - Database-Specific Features: Explore database-specific features like sequence numbers or atomic operations that can handle concurrent updates.
 
 Note: The choice of solution depends on factors like performance requirements, consistency needs, and the specific characteristics of the database and application.
+
+## Solutions
+
+### Solution-01
+
+[link.](https://github.com/DiLRandI/concurrent-counter/blob/main/cmd/solution-01/main.go#L34-L48) To run the code
+
+```bash
+make run APP=solution-01 
+```
+
+This is the core of the problem: it's just independently reading the value, incrementing it, and writing it back. The end result is always incorrect in this case.
