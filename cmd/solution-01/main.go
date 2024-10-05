@@ -31,14 +31,19 @@ func doWork(ctx context.Context, db *sql.DB) error {
 		default:
 		}
 
+		// reading the value
 		var value int
 
 		row := db.QueryRowContext(ctx, "SELECT `count_value` from `Counter` LIMIT 1")
 		checkError("error querying the Counter table", row.Err())
 		checkError("error scanning the value", row.Scan(&value))
 
+		slog.Info("value of the counter", "value", value)
+
+		// increment the value
 		value++
 
+		// write updated value
 		_, err := db.ExecContext(ctx, "UPDATE `Counter` SET `count_value` = ?;", value)
 		checkError("error updating counter value", err)
 	}
