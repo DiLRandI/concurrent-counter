@@ -34,7 +34,7 @@ func doWork(ctx context.Context, db *sql.DB) error {
 		// reading the value
 		var value int
 
-		row := db.QueryRowContext(ctx, "SELECT `count_value` from `Solution01` LIMIT 1")
+		row := db.QueryRowContext(ctx, "SELECT `count_value` from `Solution02` WHERE id = 1")
 		checkError("error querying the Counter table", row.Err())
 		checkError("error scanning the value", row.Scan(&value))
 
@@ -44,7 +44,7 @@ func doWork(ctx context.Context, db *sql.DB) error {
 		value++
 
 		// write updated value
-		_, err := db.ExecContext(ctx, "UPDATE `Solution01` SET `count_value` = ?;", value)
+		_, err := db.ExecContext(ctx, "UPDATE `Solution02` SET `count_value` = ? WHERE id = 1;", value)
 		checkError("error updating counter value", err)
 	}
 

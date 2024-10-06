@@ -32,11 +32,27 @@ func doWork(ctx context.Context, db *sql.DB) error {
 		}
 
 		// reading the value
+		tx, err := db.BeginTx(ctx, &sql.TxOptions{
+			Isolation: sql.LevelSerializable,
+		})
+		checkError("failed to crete db transaction", err)
+
+		rollbackFn := func(msg string, err error) {
+			if err == nil {
+				return
+			}
+
+			checkError("failed to rollback transaction", tx.Rollback())
+			checkError(msg, err)
+		}
+
 		var value int
 
-		row := db.QueryRowContext(ctx, "SELECT `count_value` from `Solution01` LIMIT 1")
-		checkError("error querying the Counter table", row.Err())
-		checkError("error scanning the value", row.Scan(&value))
+		row := tx.QueryRowContext(ctx, "SELECT `count_value` from `Solution04` WHERE id = 1")
+		rollbackFn("error querying the Counter table", row.Err())
+
+		err = row.Scan(&value)
+		rollbackFn("error scanning the value", err)
 
 		slog.Info("value of the counter", "value", value)
 
@@ -44,8 +60,10 @@ func doWork(ctx context.Context, db *sql.DB) error {
 		value++
 
 		// write updated value
-		_, err := db.ExecContext(ctx, "UPDATE `Solution01` SET `count_value` = ?;", value)
-		checkError("error updating counter value", err)
+		_, err = tx.ExecContext(ctx, "UPDATE `Solution04` SET `count_value` = ? WHERE id = 1;", value)
+		rollbackFn("error updating counter value", err)
+
+		checkError("error when committing the transaction", tx.Commit())
 	}
 
 	return nil
