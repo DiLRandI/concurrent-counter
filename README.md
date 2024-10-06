@@ -30,14 +30,44 @@ Scenario
 
 Note: The choice of solution depends on factors like performance requirements, consistency needs, and the specific characteristics of the database and application.
 
-## Solutions
+## Solutions - Failures
 
 ### Solution-01
 
 [link.](https://github.com/DiLRandI/concurrent-counter/blob/main/cmd/solution-01/main.go#L34-L48) To run the code
 
 ```bash
-make run APP=solution-01 
+make run APP=solution-01
 ```
 
 This is the core of the problem: it's just independently reading the value, incrementing it, and writing it back. The end result is always incorrect in this case.
+
+### Solution-02
+
+[link.](https://github.com/DiLRandI/concurrent-counter/blob/main/cmd/solution-02/main.go#L34-L48) To run the code
+
+```bash
+make run APP=solution-02
+```
+
+This is mostly same as [Solution-01](#solution-01). Only different is table now have where statement on primary key. But still the result is wrong.
+
+### Solution-03
+
+[link.](https://github.com/DiLRandI/concurrent-counter/blob/main/cmd/solution-03/main.go#L35-64) To run the code
+
+```bash
+make run APP=solution-03
+```
+
+This is mostly same as [Solution-01](#solution-01) but using database transaction with default level. But still the result is wrong.
+
+### Solution-04
+
+[link.](https://github.com/DiLRandI/concurrent-counter/blob/main/cmd/solution-04/main.go#L35-64) To run the code
+
+```bash
+make run APP=solution-04
+```
+
+This is mostly same as [Solution-02](#solution-02). but using database transaction with default level. But still the result is wrong.

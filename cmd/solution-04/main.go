@@ -32,9 +32,7 @@ func doWork(ctx context.Context, db *sql.DB) error {
 		}
 
 		// reading the value
-		tx, err := db.BeginTx(ctx, &sql.TxOptions{
-			Isolation: sql.LevelSerializable,
-		})
+		tx, err := db.BeginTx(ctx, nil)
 		checkError("failed to crete db transaction", err)
 
 		rollbackFn := func(msg string, err error) {

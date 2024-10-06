@@ -1,6 +1,6 @@
 APP = $(error You must provide APP.)
 
-build:
+build: clean
 	CGO_ENABLED=0 go build -v -ldflags='-s -w' -trimpath -o bin/${APP} cmd/${APP}/main.go
 
 start-db:
@@ -14,3 +14,6 @@ run: build
 
 stop:
 	docker compose down -v --remove-orphans --rmi local
+
+clean:
+	rm -rf ./bin/*
