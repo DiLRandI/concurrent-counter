@@ -17,3 +17,6 @@ stop:
 
 clean:
 	rm -rf ./bin/*
+
+start-monitoring:
+	docker compose up -d grafana
