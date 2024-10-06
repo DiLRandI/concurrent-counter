@@ -71,3 +71,25 @@ make run APP=solution-04
 ```
 
 This is mostly same as [Solution-02](#solution-02). but using database transaction with default level. But still the result is wrong.
+
+### Solution-05
+
+[link.](https://github.com/DiLRandI/concurrent-counter/blob/main/cmd/solution-03/main.go#L35-64) To run the code
+
+```bash
+make run APP=solution-05
+```
+
+This is mostly same as [Solution-03](#solution-03), this time we use database transaction with isolation level [serializable](https://en.wikipedia.org/wiki/Isolation_(database_systems)#Serializable).
+Initially, each application instance can successfully increment the counter value. However, due to a deadlock situation, the application will eventually fail. Ultimately, only one instance will remain operational, continuing to increment the counter value.
+
+### Solution-06
+
+[link.](https://github.com/DiLRandI/concurrent-counter/blob/main/cmd/solution-04/main.go#L35-64) To run the code
+
+```bash
+make run APP=solution-06
+```
+
+This is mostly same as [Solution-04](#solution-04), this time we use database transaction with isolation level [serializable](https://en.wikipedia.org/wiki/Isolation_(database_systems)#Serializable).
+Initially, each application instance can successfully increment the counter value. However, due to a deadlock situation, the application will eventually fail. Ultimately, only one instance will remain operational, continuing to increment the counter value.

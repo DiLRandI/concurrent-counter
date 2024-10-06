@@ -22,3 +22,14 @@ CREATE TABLE `Solution04` (
     PRIMARY KEY (id)
 );
 INSERT INTO `Solution04` (`id`, `count_value`) VALUES (1, 0);
+
+CREATE TABLE `Solution05` ( count_value BIGINT NOT NULL DEFAULT 0 );
+INSERT INTO `Solution05` (`count_value`) VALUES (0);
+
+
+CREATE TABLE `Solution06` (
+    id int NOT NULL,
+    count_value BIGINT NOT NULL DEFAULT 0,
+    PRIMARY KEY (id)
+);
+INSERT INTO `Solution06` (`id`, `count_value`) VALUES (1, 0);
